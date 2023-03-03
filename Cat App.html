@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Random Cat Pictures</title>
+	<style type="text/css">
+		img {
+			width: 400px;
+			height: auto;
+			display: block;
+			margin: 0 auto;
+			margin-bottom: 20px;
+		}
+		button {
+			display: block;
+			margin: 0 auto;
+			margin-top: 20px;
+			padding: 10px;
+			font-size: 20px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<img id="catImg">
+	<button onclick="getCat()">Get a new cat</button>
+	<script>
+		function getCat() {
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var catData = JSON.parse(this.responseText);
+					document.getElementById("catImg").src = catData[0].url;
+				}
+			};
+			xmlhttp.open("GET", "https://api.thecatapi.com/v1/images/search", true);
+			xmlhttp.send();
+		}
+		getCat(); // get the first cat picture on page load
+	</script>
+</body>
+</html>
